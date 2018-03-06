@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-2">
+        <h1><span class="label label-default">Test Application</span></h1>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Accounts</h3></div>
+    </div>
+</div>
+<div class="container" id="accounts-container"></div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Contacts</h3></div>
+    </div>
+</div>
+<div class="container" id="contacts-container"></div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>Users</h3></div>
+    </div>
+</div>
+<div class="container" id="users-container"></div>
+
+<script type="text/javascript">
+    $.ajax({
+        url: 'Home/Accounts',
+        cache: true,
+        success: function (data) {
+            var html = $(data);
+            $('#accounts-container').prepend(html);
+        },
+        async: true,
+    });
+    $.ajax({
+        url: 'Home/Contacts',
+        cache: true,
+        success: function (data) {
+            var html = $(data);
+            $('#contacts-container').prepend(html);
+        },
+        async: true,
+    });
+    $.ajax({
+        url: 'Home/Users',
+        cache: true,
+        success: function (data) {
+            var html = $(data);
+            $('#users-container').prepend(html);
+        },
+        async: true,
+    });
+</script>

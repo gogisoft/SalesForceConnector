@@ -1,0 +1,13 @@
+﻿@model TestApplication.Models.Users
+@{
+    ViewBag.Title = "Users";
+}
+
+@foreach (var o in Model.Objects)
+{
+    <div class="row">
+        <div class="col-md-6">
+            @Html.Label(o.Name)
+        </div>
+    </div>
+}
