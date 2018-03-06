@@ -3,9 +3,9 @@ Portable SalesForce REST .NET library
 
 The aim of this project is to provide a basic .NET solution to make SalesForce REST calls without using third party SDKs. The other objective was to make it perform well and be easy to add to any .NET application.
 
-Although SalesForce provides an SDK to make REST calls, I though it would be interesting to make a REST library to do Upsert queries. This project contains everything you need to integrate a .NET web application with a SaelsForce install. 
+Although SalesForce provides an SDK to make REST calls, I though it would be interesting to make a native C# REST library. This project contains everything needed to integrate a .NET web application with a SalesForce deploymnent. 
 
-The project consists of three individual projects. 
+The solution consists of three individual projects. 
 
 The Common project holds classes representing standard SalesForce objects. Common also holds the serialization methods used to send and retrieve JSON objects.
 
