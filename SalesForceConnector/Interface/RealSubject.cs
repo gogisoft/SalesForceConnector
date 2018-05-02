@@ -9,6 +9,7 @@ using System.Net;
 using System.Xml;
 using Common;
 using SalesForceConnector.Network;
+using System.Runtime.Serialization.Json;
 
 namespace SalesForceConnector.Interface
 {
@@ -76,6 +77,28 @@ namespace SalesForceConnector.Interface
         {
             HTTPGetRequest client = new HTTPGetRequest(QueryURL + "?q=" + QueryStrings.Accounts_Select + "+WHERE+InActive__c=false");
             NetResponse NR = client.Execute();
+            if (NR.HasError == false)
+            {
+                QueryResult<Account> qResult = new QueryResult<Account>();
+                qResult.HydrateFromJSon(NR.JSON);
+                List<Account> accounts = new List<Account>();
+                accounts.AddRange(qResult.records);
+                while (qResult.done == false)
+                {
+                    client = new HTTPGetRequest(RESTDomainURL + qResult.nextRecordsUrl);
+                    NR = client.Execute();
+                    qResult = new QueryResult<Account>();
+                    qResult.HydrateFromJSon(NR.JSON);
+                    accounts.AddRange(qResult.records);
+                }
+                qResult.records.Clear();
+                qResult.records.AddRange(accounts);
+                MemoryStream ms = new MemoryStream();
+                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(List<Account>));
+                ser.WriteObject(ms, qResult.records);
+                string json = Encoding.UTF8.GetString(ms.ToArray());
+                NR.JSON = json;
+            }
             return NR;
         }
         public NetResponse GetAccount(string id)
